@@ -3,11 +3,9 @@ import { useState, useContext } from 'react'
 
 import { ThemeContext } from '../../pages/Home'
 import ThemePicker from '../ThemePicker'
-import classes from './Sidebar.module.scss'
+import { SidebarProps } from '../../types'
 
-interface SidebarProps {
-  setTheme: (colour: string) => void
-}
+import classes from './Sidebar.module.scss'
 
 const Sidebar = (Props: SidebarProps) => {
   const [isVisible, setVisible] = useState(false)
@@ -19,9 +17,6 @@ const Sidebar = (Props: SidebarProps) => {
   const color = useContext(ThemeContext)
 
   return (
-    //  Inline styles probably aren't the best solution to this problem
-    //  I'm not sure the best way to share the context with the stylesheets other than classnames & predefined CSS classes
-    // I will look for a way to do this more programtically or include the theme styles in the context itself
     <nav
       style={{ backgroundColor: color }}
       className={isVisible ? classes.sidebar__shown : classes.sidebar__hidden}

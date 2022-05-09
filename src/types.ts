@@ -102,3 +102,24 @@ export type CountryState = {
   countries: Country[]
   inFavs: Country[]
 }
+
+export interface CountryProps {
+  key: string
+  flag: string
+  name: string
+  languages: object
+  population: number
+  region: string
+}
+
+export interface SearchProps {
+  setQuery: (query: string) => void
+}
+
+export interface SidebarProps {
+  setTheme: (colour: string) => void
+}
+
+export interface ThemeButtonProps {
+  setTheme: (colour: string) => void
+}

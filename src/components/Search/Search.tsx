@@ -2,10 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 
 import { SearchContext } from '../../pages/Home'
-
-interface SearchProps {
-  setQuery: (query: string) => void
-}
+import { SearchProps } from '../../types'
 
 const Search = (Props: SearchProps) => {
   let typedQuery = useContext(SearchContext)

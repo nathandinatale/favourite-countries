@@ -2,17 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { Country } from '../../types'
+import { Country, CountryProps } from '../../types'
 import { addCountry, removeCountry } from '../../redux/actions'
-
-interface CountryProps {
-  key: string
-  flag: string
-  name: string
-  languages: object
-  population: number
-  region: string
-}
 
 const CountryRow = (Props: CountryProps) => {
   const [favorite, setFavorite] = useState(false)

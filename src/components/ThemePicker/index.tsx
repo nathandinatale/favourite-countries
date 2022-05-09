@@ -2,11 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 
 import { ThemeContext } from '../../pages/Home'
-
-// move interfaces to the interface file?
-interface ThemeButtonProps {
-  setTheme: (colour: string) => void
-}
+import { ThemeButtonProps } from '../../types'
 
 // is it necessary to destructure the props with the interface declared?
 const ThemePicker = (Props: ThemeButtonProps) => {
