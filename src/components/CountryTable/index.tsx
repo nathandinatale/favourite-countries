@@ -6,7 +6,7 @@ import { AppState, Country } from '../../types'
 import CountryRow from '../CountryRow'
 
 const CountryTable = () => {
-  let searchQuery = useContext(SearchContext)
+  let searchQuery = useContext(SearchContext).toLowerCase()
   const countries = useSelector((state: AppState) => state.country.countries)
 
   // Implement better typing here later
@@ -14,7 +14,7 @@ const CountryTable = () => {
     <div>
       {searchQuery
         ? countries
-            .filter((country) => country.id.includes(searchQuery))
+            .filter((country) => country.id.toLowerCase().includes(searchQuery))
             .map((country: Country) => (
               <CountryRow
                 key={country.id}
