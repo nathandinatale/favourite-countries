@@ -3,6 +3,7 @@ import { useContext } from 'react'
 
 import { ThemeContext } from '../../pages/Home'
 
+// move interfaces to the interface file?
 interface ThemeButtonProps {
   setTheme: (colour: string) => void
 }

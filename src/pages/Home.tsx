@@ -5,17 +5,23 @@ import { Link } from 'react-router-dom'
 
 // import ThemePicker from '../components/ThemePicker'
 import { Product, AppState } from '../types'
-import { addProduct, removeProduct } from '../redux/actions'
+import { addProduct, removeProduct, fetchCountries } from '../redux/actions'
 import Sidebar from '../components/Sidebar'
+import CountryTable from '../components/CountryTable'
+import Search from '../components/Search/Search'
 
 const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
 
 export const ThemeContext = createContext<string>('')
+export const SearchContext = createContext<string>('')
 
 export default function Home() {
   const [theme, setTheme] = useState('red')
+  const [query, setQuery] = useState('')
 
   const dispatch = useDispatch()
+  dispatch(fetchCountries('https://restcountries.com/v3.1/all'))
+
   const products = useSelector((state: AppState) => state.product.inCart)
 
   const handleAddProduct = () => {
@@ -30,6 +36,10 @@ export default function Home() {
   return (
     <ThemeContext.Provider value={theme}>
       <Sidebar setTheme={setTheme} />
+      <SearchContext.Provider value={query}>
+        <Search setQuery={setQuery} />
+        <CountryTable />
+      </SearchContext.Provider>
       <h1>Home page</h1>
       {products.length <= 0 && <div>No products in cart</div>}
       <ul>

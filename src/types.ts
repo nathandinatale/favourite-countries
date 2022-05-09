@@ -3,6 +3,10 @@ export const ADD_PRODUCT = 'ADD_PRODUCT'
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT'
 export const TOGGLE_DIALOG = 'TOGGLE_DIALOG'
 
+export const LOAD_COUNTRIES = 'LOAD_COUNTRIES'
+export const ADD_COUNTRY = 'ADD_COUNTRY'
+export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
+
 // Enum
 export enum DialogType {
   SignIn = 'signIn',
@@ -56,4 +60,45 @@ export type UiState = {
 export type AppState = {
   product: ProductState
   ui: UiState
+  country: CountryState
+}
+
+export type Country = {
+  id: string
+  flag: string
+  name: string
+  languages: Object
+  population: number
+  region: string
+}
+
+export type AddCountryAction = {
+  type: typeof ADD_COUNTRY
+  payload: {
+    country: Country
+  }
+}
+
+export type RemoveCountryAction = {
+  type: typeof REMOVE_COUNTRY
+  payload: {
+    country: Country
+  }
+}
+
+export type LoadCountriesAction = {
+  type: typeof LOAD_COUNTRIES
+  payload: {
+    loadedCountries: Country[]
+  }
+}
+
+export type CountryActions =
+  | AddCountryAction
+  | RemoveCountryAction
+  | LoadCountriesAction
+
+export type CountryState = {
+  countries: Country[]
+  inFavs: Country[]
 }
