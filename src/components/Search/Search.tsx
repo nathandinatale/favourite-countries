@@ -8,7 +8,6 @@ interface SearchProps {
 }
 
 const Search = (Props: SearchProps) => {
-  // const [typedQuery, setTypedQuery] = useState('')
   let typedQuery = useContext(SearchContext)
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
