@@ -37,11 +37,9 @@ export function loadCountries(countries: Country[]): CountryActions {
 }
 
 export function fetchCountries(url: string) {
-  console.log('Action executed')
   const loadedArray: Country[] = []
   return (dispatch: Dispatch) => {
     axios.get(url).then((response) => {
-      console.log(response)
       response.data.map((country: any) =>
         loadedArray.push({
           id: country.name.common as string,

@@ -1,41 +1,67 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { TableRow, TableCell, IconButton } from '@mui/material'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 
-import { Country, CountryProps } from '../../types'
+import { Country, CountryProps, AppState } from '../../types'
 import { addCountry, removeCountry } from '../../redux/actions'
+import { ThemeContext } from '../../pages/Home'
 
 const CountryRow = (Props: CountryProps) => {
-  const [favorite, setFavorite] = useState(false)
-  let langArray: string[] = []
+  const theme = useContext(ThemeContext)
   const dispatch = useDispatch()
+
+  const countryInFav = useSelector((state: AppState) =>
+    state.country.inFavs.find((foundCountry) => foundCountry.id === Props.name)
+  )
+
   const country: Country = { ...Props, id: Props.name }
 
-  const handleFavorites = () => {
-    favorite ? dispatch(removeCountry(country)) : dispatch(addCountry(country))
-    favorite ? setFavorite(false) : setFavorite(true)
-  }
-
+  let langArray: string[] = []
   if (Props.languages) {
     langArray = Object.values(country.languages) as string[]
   }
 
+  const handleFavorites = () => {
+    countryInFav
+      ? dispatch(removeCountry(country))
+      : dispatch(addCountry(country))
+  }
+
   return (
-    <div>
-      <img
-        src={Props.flag}
-        width="100"
-        height="100"
-        alt="flag of country"
-      ></img>
-      {country.name}
-      {country.population}
-      {country.region}
-      {langArray}
-      <button onClick={handleFavorites}>Favorite</button>
-      <Link to={`/countries/${country.name}`}>View Details</Link>
-      {favorite && <span>Hello I am favorite</span>}
-    </div>
+    <TableRow>
+      <TableCell>
+        <img
+          src={Props.flag}
+          width="50"
+          height="30"
+          alt={`flag of ${country.name}`}
+        ></img>
+      </TableCell>
+      <TableCell>
+        <Link to={`/countries/${country.name}`}>{country.name}</Link>
+      </TableCell>
+      <TableCell>{country.population}</TableCell>
+      <TableCell>{country.region}</TableCell>
+      <TableCell>
+        <ul>
+          {langArray.map((lang) => (
+            <li key={lang}>{lang}</li>
+          ))}
+        </ul>
+      </TableCell>
+      <TableCell>
+        <IconButton onClick={handleFavorites}>
+          {countryInFav ? (
+            <FavoriteIcon sx={{ color: theme }} />
+          ) : (
+            <FavoriteBorderIcon sx={{ color: theme }} />
+          )}
+        </IconButton>
+      </TableCell>
+    </TableRow>
   )
 }
 

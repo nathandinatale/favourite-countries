@@ -6,6 +6,7 @@ export const TOGGLE_DIALOG = 'TOGGLE_DIALOG'
 export const LOAD_COUNTRIES = 'LOAD_COUNTRIES'
 export const ADD_COUNTRY = 'ADD_COUNTRY'
 export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
+export const LOAD_COUNTRY = 'LOAD_COUNTRY'
 
 // Enum
 export enum DialogType {
@@ -122,4 +123,9 @@ export interface SidebarProps {
 
 export interface ThemeButtonProps {
   setTheme: (colour: string) => void
+}
+
+export interface NavBarProps {
+  setTheme: (colour: string) => void
+  setQuery: (query: string) => void
 }

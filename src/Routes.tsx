@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Home from './pages/Home'
 import Product from './pages/Product'
-import Country from './pages/Country'
+import Country from './pages/SingleCountry'
 
 const Routes = () => (
   <Switch>

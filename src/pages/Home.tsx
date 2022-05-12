@@ -1,16 +1,10 @@
 import React from 'react'
 import { createContext, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
-// import ThemePicker from '../components/ThemePicker'
-import { Product, AppState } from '../types'
-import { addProduct, removeProduct, fetchCountries } from '../redux/actions'
-import Sidebar from '../components/Sidebar'
+import { fetchCountries } from '../redux/actions'
+import NavBar from '../components/NavBar'
 import CountryTable from '../components/CountryTable'
-import Search from '../components/Search/Search'
-
-const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
 
 export const ThemeContext = createContext<string>('')
 export const SearchContext = createContext<string>('')
@@ -22,39 +16,14 @@ export default function Home() {
   const dispatch = useDispatch()
   dispatch(fetchCountries('https://restcountries.com/v3.1/all'))
 
-  const products = useSelector((state: AppState) => state.product.inCart)
-
-  const handleAddProduct = () => {
-    const product: Product = {
-      id: (+new Date()).toString(),
-      name: names[Math.floor(Math.random() * names.length)],
-      price: +(Math.random() * 10).toFixed(2),
-    }
-    dispatch(addProduct(product))
-  }
-
   return (
-    <ThemeContext.Provider value={theme}>
-      <Sidebar setTheme={setTheme} />
-      <SearchContext.Provider value={query}>
-        <Search setQuery={setQuery} />
-        <CountryTable />
-      </SearchContext.Provider>
-      <h1>Home page</h1>
-      {products.length <= 0 && <div>No products in cart</div>}
-      <ul>
-        {products.map((p) => (
-          <li key={p.id}>
-            <Link to={`/products/${p.id}`}>{`${p.name} - $${p.price}`}</Link>
-            <button onClick={() => dispatch(removeProduct(p))}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleAddProduct}>Add product</button>
-      {/* Sending the function to change the state to the child component as a prop */}
-      {/* Could be a better implementation to include the setTheme as part of a custom hook along with the context*/}
-      {/* <ThemePicker setTheme={setTheme} /> */}
-      <div style={{ border: `4px solid ${theme}` }}>{theme}</div>
-    </ThemeContext.Provider>
+    <>
+      <ThemeContext.Provider value={theme}>
+        <SearchContext.Provider value={query}>
+          <NavBar setTheme={setTheme} setQuery={setQuery} />
+          <CountryTable />
+        </SearchContext.Provider>
+      </ThemeContext.Provider>
+    </>
   )
 }

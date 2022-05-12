@@ -1,29 +1,30 @@
 import React from 'react'
-import { useContext } from 'react'
+import { Button, Stack } from '@mui/material'
 
-import { ThemeContext } from '../../pages/Home'
 import { ThemeButtonProps } from '../../types'
 
-// is it necessary to destructure the props with the interface declared?
 const ThemePicker = (Props: ThemeButtonProps) => {
   const handleThemeSwitch = (colour: string): void => {
     Props.setTheme(colour)
   }
-  const themes = ['blue', 'green', 'purple', 'red']
 
-  const colour = useContext(ThemeContext)
+  // Could add a color picker option here
+  const themes = ['blue', 'green', 'purple', 'red', 'teal']
 
   return (
-    <>
-      <p>Current theme: {colour}</p>
-      {/* Maybe this should be a list? */}
-      {/* Could be better to put each button as its own component*/}
+    <Stack spacing={2} direction="column" alignItems="center">
       {themes.map((theme) => (
-        <button onClick={() => handleThemeSwitch(theme)} key={theme}>
-          {theme} Button
-        </button>
+        <Button
+          variant="contained"
+          onClick={() => handleThemeSwitch(theme)}
+          key={theme}
+          style={{ backgroundColor: theme }}
+          size="small"
+        >
+          {theme.charAt(0)}
+        </Button>
       ))}
-    </>
+    </Stack>
   )
 }
 

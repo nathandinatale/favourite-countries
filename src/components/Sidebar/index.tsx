@@ -1,31 +1,34 @@
-import React from 'react'
-import { useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { Drawer, Box, IconButton } from '@mui/material'
+import { Menu } from '@mui/icons-material/'
 
-import { ThemeContext } from '../../pages/Home'
 import ThemePicker from '../ThemePicker'
 import { SidebarProps } from '../../types'
 
-import classes from './Sidebar.module.scss'
-
 const Sidebar = (Props: SidebarProps) => {
-  const [isVisible, setVisible] = useState(false)
+  const [isSidebarOpen, setSideBarOpen] = useState(false)
 
   const handleShow = (): void => {
-    isVisible ? setVisible(false) : setVisible(true)
+    isSidebarOpen ? setSideBarOpen(false) : setSideBarOpen(true)
   }
 
-  const color = useContext(ThemeContext)
-
   return (
-    <nav
-      style={{ backgroundColor: color }}
-      className={isVisible ? classes.sidebar__shown : classes.sidebar__hidden}
-    >
-      <button onClick={handleShow}>Hide/show</button>
-      {isVisible && <div>SIDEBAR VISIBLE</div>}
-      {/* this prop drilling here is less than ideal.. probably can address by grouping the state function into the context*/}
-      <ThemePicker setTheme={Props.setTheme} />
-    </nav>
+    <>
+      <IconButton onClick={handleShow}>
+        <Menu />
+      </IconButton>
+      <Drawer anchor="left" open={isSidebarOpen} onClose={handleShow}>
+        <Box
+          component="nav"
+          p={2}
+          width="250px"
+          textAlign="center"
+          role="presentation"
+        >
+          <ThemePicker setTheme={Props.setTheme} />
+        </Box>
+      </Drawer>
+    </>
   )
 }
 
